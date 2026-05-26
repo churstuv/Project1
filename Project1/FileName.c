@@ -7,7 +7,7 @@
 #define MAP_WIDTH 23
 #define MAP_HEIGHT 15
 #define TOTAL_TILES 200
-#define COLORS_NUM 10 // 📌 요청사항 반영: NUM_COLORS -> COLORS_NUM
+#define COLORS_NUM 10 // ?? 요청사항 반영: NUM_COLORS -> COLORS_NUM
 
 // 1. 타일 구조체 정의 (첫 번째 방식: struct 키워드를 그대로 사용!)
 struct Tile {
@@ -30,8 +30,6 @@ void shuffleBoard();
 bool checkDeadlock();
 
 int main(void) {
-    system("chcp 65001"); // 콘솔 출력 인코딩을 UTF-8로 변경
-
     system("cls");
     // 1. 난수 생성기 초기화 (가장 먼저 실행되어야 함!)
     srand((unsigned int)time(NULL));
@@ -50,7 +48,7 @@ int main(void) {
         printBoard();
 
         // 교착 상태 검사 예시
-        if (checkDeadlock()) {
+        if (checkDeadlock()==true) {
             printf("\n[교착 상태 감지!] 타일을 자동으로 재배치합니다.\n");
             Sleep(2000); // 2초 대기
             shuffleBoard();
@@ -122,7 +120,7 @@ void initBoard() {
             count++;
         }
         else {
-            continue; // 📌 요청사항 반영: 명시적 continue 사용
+            continue; // ?? 요청사항 반영: 명시적 continue 사용
         }
     }
 }
@@ -229,5 +227,59 @@ void shuffleBoard() {
 
 // [미션 4] 더 이상 맞출 수 있는 타일 쌍이 없는 교착 상태(Deadlock) 검사
 bool checkDeadlock() {
-    return false; // 아직 검사 기능이 없으므로 항상 거짓(false)으로 임시 반환
+    for (int startY = 0; startY < MAP_HEIGHT; startY++) {
+        for (int startX = 0; startX < MAP_WIDTH; startX++) {
+            if (board[startY][startX].isExists == false) {
+                struct Tile* leftTile = NULL;
+                struct Tile* rightTile = NULL;
+                struct Tile* upTile = NULL;
+                struct Tile* downTile = NULL;
+                printf("\n(%d, %d) 좌표를 기준으로 4방향 교착 상태 탐색을 수행해야 합니다.\n", startX, startY);
+                for (int x = startX - 1; x >= 0; x--) {
+                    if (board[startY][x].isExists == true) {
+                        leftTile = &board[startY][x];
+                        break;
+                    }
+                }
+                for (int x = startX + 1; x < MAP_WIDTH; x++) {
+                    if (board[startY][x].isExists == true) {
+                        rightTile = &board[startY][x];
+                        break;
+                    }
+                }
+                for (int y = startY - 1; y >= 0; y--) {
+                    if (board[y][startX].isExists == true) {
+                        upTile = &board[y][startX];
+                        break;
+                    }
+                }
+                for (int y = startY + 1; y < MAP_HEIGHT; y++) {
+                    if (board[y][startX].isExists == true) {
+                        downTile = &board[y][startX];
+                        break;
+                    }
+                }
+                int colorCount[COLORS_NUM] = { 0 }; // 각 색상별로 발견된 타일 수를 세는 배열
+                if (leftTile != NULL) {
+                    colorCount[(*leftTile).color] += 1;
+                }
+                if (rightTile != NULL) {
+                    colorCount[(*rightTile).color] += 1;
+                }
+                if (upTile != NULL) {
+                    colorCount[(*upTile).color] += 1;
+                }
+                if (downTile != NULL) {
+                    colorCount[(*downTile).color] += 1;
+                }
+
+                for (int i = 0; i < COLORS_NUM; i++) {
+                    if (colorCount[i] >= 2) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    return true;
 }
