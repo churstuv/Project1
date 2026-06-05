@@ -7,22 +7,22 @@
 #define MAP_WIDTH 23
 #define MAP_HEIGHT 15
 #define TOTAL_TILES 200
-#define COLORS_NUM 10 // ?? ¿äÃ»»çÇ× ¹İ¿µ: NUM_COLORS -> COLORS_NUM
+#define COLORS_NUM 10 // ?? ?”ì²­?¬í•­ ë°˜ì˜: NUM_COLORS -> COLORS_NUM
 
-// 1. Å¸ÀÏ ±¸Á¶Ã¼ Á¤ÀÇ (Ã¹ ¹øÂ° ¹æ½Ä: struct Å°¿öµå¸¦ ±×´ë·Î »ç¿ë!)
+// 1. ?€??êµ¬ì¡°ì²??•ì˜ (ì²?ë²ˆì§¸ ë°©ì‹: struct ?¤ì›Œ?œë? ê·¸ë?ë¡??¬ìš©!)
 struct Tile {
-    int color;       // 0 ~ 9 (10°¡Áö »ö»ó)
-    int x, y;        // ±×¸®µå ÁÂÇ¥
-    bool isExists;   // ÇöÀç Ä­¿¡ Å¸ÀÏÀÌ Á¸ÀçÇÏ´Â°¡?
-}; // <-- ±¸Á¶Ã¼ Á¤ÀÇ ³¡¿¡´Â ¼¼¹ÌÄİ·Ğ(;) ÇÊ¼ö!
+    int color;       // 0 ~ 9 (10ê°€ì§€ ?‰ìƒ)
+    int x, y;        // ê·¸ë¦¬??ì¢Œí‘œ
+    bool isExists;   // ?„ì¬ ì¹¸ì— ?€?¼ì´ ì¡´ì¬?˜ëŠ”ê°€?
+}; // <-- êµ¬ì¡°ì²??•ì˜ ?ì—???¸ë?ì½œë¡ (;) ?„ìˆ˜!
 
-// Àü¿ª º¯¼ö·Î °ÔÀÓÆÇ ¼±¾ğ (ÀÚ·áÇü ÀÌ¸§ ¾Õ¿¡ struct¸¦ ²À ºÙ¿©ÁÜ!)
+// ?„ì—­ ë³€?˜ë¡œ ê²Œì„??? ì–¸ (?ë£Œ???´ë¦„ ?ì— structë¥?ê¼?ë¶™ì—¬ì¤?)
 struct Tile board[MAP_HEIGHT][MAP_WIDTH];
 
 int score = 0;
-int gameTime = 120; // Á¦ÇÑ½Ã°£ 120ÃÊ
+int gameTime = 120; // ?œí•œ?œê°„ 120ì´?
 
-// ÇÔ¼ö ¼±¾ğ (ÇÁ·ÎÅäÅ¸ÀÔ)
+// ?¨ìˆ˜ ? ì–¸ (?„ë¡œ? í???
 void initBoard();
 void printBoard();
 void searchAndMatch(int startX, int startY);
@@ -31,74 +31,74 @@ bool checkDeadlock();
 
 int main(void) {
     system("cls");
-    // 1. ³­¼ö »ı¼º±â ÃÊ±âÈ­ (°¡Àå ¸ÕÀú ½ÇÇàµÇ¾î¾ß ÇÔ!)
+    // 1. ?œìˆ˜ ?ì„±ê¸?ì´ˆê¸°??(ê°€??ë¨¼ì? ?¤í–‰?˜ì–´????)
     srand((unsigned int)time(NULL));
 
-    // 2. °ÔÀÓÆÇ ÃÊ±âÈ­ (¹«ÀÛÀ§ 200°³ ¹èÄ¡)
+    // 2. ê²Œì„??ì´ˆê¸°??(ë¬´ì‘??200ê°?ë°°ì¹˜)
     initBoard();
 
-    // 3. Å×½ºÆ®¿ë ¸ŞÀÎ °ÔÀÓ ·çÇÁ (ÅÍ¹Ì³Î ÁÂÇ¥ ÀÔ·Â ¹æ½Ä)
+    // 3. ?ŒìŠ¤?¸ìš© ë©”ì¸ ê²Œì„ ë£¨í”„ (?°ë???ì¢Œí‘œ ?…ë ¥ ë°©ì‹)
     while (gameTime > 0) {
-        system("cls"); // È­¸é Áö¿ì±â (Windows Àü¿ë)
+        system("cls"); // ?”ë©´ ì§€?°ê¸° (Windows ?„ìš©)
 
-        printf("=== Color Tiles ¹é¿£µå Å×½ºÆ® ===\n");
-        printf("ÇöÀç Á¡¼ö: %d Á¡ | ³²Àº ½Ã°£: %d ÃÊ\n\n", score, gameTime);
+        printf("=== Color Tiles ë°±ì—”???ŒìŠ¤??===\n");
+        printf("?„ì¬ ?ìˆ˜: %d ??| ?¨ì? ?œê°„: %d ì´?n\n", score, gameTime);
 
-        // ¸Ê Ãâ·Â
+        // ë§?ì¶œë ¥
         printBoard();
 
-        // ±³Âø »óÅÂ °Ë»ç ¿¹½Ã
+        // êµì°© ?íƒœ ê²€???ˆì‹œ
         if (checkDeadlock()==true) {
-            printf("\n[±³Âø »óÅÂ °¨Áö!] Å¸ÀÏÀ» ÀÚµ¿À¸·Î Àç¹èÄ¡ÇÕ´Ï´Ù.\n");
-            Sleep(2000); // 2ÃÊ ´ë±â
+            printf("\n[êµì°© ?íƒœ ê°ì?!] ?€?¼ì„ ?ë™?¼ë¡œ ?¬ë°°ì¹˜í•©?ˆë‹¤.\n");
+            Sleep(2000); // 2ì´??€ê¸?
             shuffleBoard();
             continue;
         }
 
-        // ÅÍ¹Ì³Î ÀÔ·Â Å×½ºÆ®¿ë (³ªÁß¿¡ ÇÁ·ĞÆ®¿£µå°¡ ¸¶¿ì½º Å¬¸¯ ÁÂÇ¥·Î ´ëÃ¼ÇÒ ºÎºĞ)
+        // ?°ë????…ë ¥ ?ŒìŠ¤?¸ìš© (?˜ì¤‘???„ë¡ ?¸ì—”?œê? ë§ˆìš°???´ë¦­ ì¢Œí‘œë¡??€ì²´í•  ë¶€ë¶?
         int inputX, inputY;
-        printf("\nÅ¬¸¯ÇÒ ºó Ä­ÀÇ ÁÂÇ¥¸¦ ÀÔ·ÂÇÏ¼¼¿ä (X Y ÀÔ·Â, Á¾·á´Â -1 -1): ");
+        printf("\n?´ë¦­??ë¹?ì¹¸ì˜ ì¢Œí‘œë¥??…ë ¥?˜ì„¸??(X Y ?…ë ¥, ì¢…ë£Œ??-1 -1): ");
         scanf_s("%d %d", &inputX, &inputY);
 
         if (inputX == -1 && inputY == -1) {
-            printf("°ÔÀÓÀ» Á¾·áÇÕ´Ï´Ù.\n");
+            printf("ê²Œì„??ì¢…ë£Œ?©ë‹ˆ??\n");
             break;
         }
 
-        // ÀÔ·Â ÁÂÇ¥ ¿¹¿Ü Ã³¸®
+        // ?…ë ¥ ì¢Œí‘œ ?ˆì™¸ ì²˜ë¦¬
         if (inputX < 0 || inputX >= MAP_WIDTH || inputY < 0 || inputY >= MAP_HEIGHT) {
-            printf("Àß¸øµÈ ¹üÀ§ÀÇ ÁÂÇ¥ÀÔ´Ï´Ù!\n");
+            printf("?˜ëª»??ë²”ìœ„??ì¢Œí‘œ?…ë‹ˆ??\n");
             Sleep(1000);
             continue;
         }
 
-        // ±ÔÄ¢ 1: ºí·ÏÀÌ Á¸ÀçÇÏ´Â Ä­À» Å¬¸¯ÇßÀ» ¶§´Â ¾Æ¹«·± ÀÏµµ ¹ß»ıÇÏÁö ¾ÊÀ½
+        // ê·œì¹™ 1: ë¸”ë¡??ì¡´ì¬?˜ëŠ” ì¹¸ì„ ?´ë¦­?ˆì„ ?ŒëŠ” ?„ë¬´???¼ë„ ë°œìƒ?˜ì? ?ŠìŒ
         if (board[inputY][inputX].isExists) {
-            printf("Å¸ÀÏÀÌ ÀÌ¹Ì Á¸ÀçÇÏ´Â Ä­Àº Å¬¸¯ÇÒ ¼ö ¾ø½À´Ï´Ù!\n");
+            printf("?€?¼ì´ ?´ë? ì¡´ì¬?˜ëŠ” ì¹¸ì? ?´ë¦­?????†ìŠµ?ˆë‹¤!\n");
             Sleep(1000);
             continue;
         }
 
-        // Å½»ö ¹× ¸ÅÄª ·ÎÁ÷ ½ÇÇà
+        // ?ìƒ‰ ë°?ë§¤ì¹­ ë¡œì§ ?¤í–‰
         searchAndMatch(inputX, inputY);
 
-        // ½Ã°£ °¨¼Ò ½Ã¹Ä·¹ÀÌ¼Ç (·çÇÁ µ¹ ¶§¸¶´Ù 1ÃÊ¾¿ °¨¼ÒÇÑ´Ù°í °¡Á¤)
+        // ?œê°„ ê°ì†Œ ?œë??ˆì´??(ë£¨í”„ ???Œë§ˆ??1ì´ˆì”© ê°ì†Œ?œë‹¤ê³?ê°€??
         gameTime--;
     }
 
     printf("\n=== GAME OVER ===\n");
-    printf("ÃÖÁ¾ Á¡¼ö: %d Á¡\n", score);
+    printf("ìµœì¢… ?ìˆ˜: %d ??n", score);
 
     return 0;
 }
 
-// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
-// ºñ¾îÀÖ´Â ¹é¿£µå ÇÙ½É ÇÔ¼ö ±¸¿ª
-// ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡
+// ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
+// ë¹„ì–´?ˆëŠ” ë°±ì—”???µì‹¬ ?¨ìˆ˜ êµ¬ì—­
+// ?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
 
-// [¹Ì¼Ç 1] 23x15 °ø°£ Áß 'Áßº¹ ¾øÀÌ ¹«ÀÛÀ§ 200Ä­'¿¡¸¸ 10°¡Áö »ö»ó Å¸ÀÏ ¹èÄ¡ÇÏ±â
+// [ë¯¸ì…˜ 1] 23x15 ê³µê°„ ì¤?'ì¤‘ë³µ ?†ì´ ë¬´ì‘??200ì¹??ë§Œ 10ê°€ì§€ ?‰ìƒ ?€??ë°°ì¹˜?˜ê¸°
 void initBoard() {
-    // 1´Ü°è: ¿ì¼± ¸ğµç 345Ä­À» ±ú²ıÇÏ°Ô ºóÄ­ »óÅÂ(-1, false)·Î ¹Ğ¾î¹ö¸®±â
+    // 1?¨ê³„: ?°ì„  ëª¨ë“  345ì¹¸ì„ ê¹¨ë—?˜ê²Œ ë¹ˆì¹¸ ?íƒœ(-1, false)ë¡?ë°€?´ë²„ë¦¬ê¸°
     for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH; x++) {
             board[y][x].color = -1;
@@ -108,7 +108,7 @@ void initBoard() {
         }
     }
 
-    // 2´Ü°è: Áßº¹ ¾øÀÌ ¹«ÀÛÀ§ ÁÂÇ¥¸¦ »ç¹æÀ¸·Î Âñ·¯°¡¸ç µü 200°³ Ã¤¿ì±â
+    // 2?¨ê³„: ì¤‘ë³µ ?†ì´ ë¬´ì‘??ì¢Œí‘œë¥??¬ë°©?¼ë¡œ ì°”ëŸ¬ê°€ë©???200ê°?ì±„ìš°ê¸?
     int count = 0;
     while (count < TOTAL_TILES) {
         int randx = rand() % MAP_WIDTH;
@@ -116,18 +116,18 @@ void initBoard() {
 
         if (board[randy][randx].isExists == false) {
             board[randy][randx].isExists = true;
-            board[randy][randx].color = rand() % COLORS_NUM; // ¼öÁ¤µÈ »ó¼ö Àû¿ë
+            board[randy][randx].color = rand() % COLORS_NUM; // ?˜ì •???ìˆ˜ ?ìš©
             count++;
         }
         else {
-            continue; // ?? ¿äÃ»»çÇ× ¹İ¿µ: ¸í½ÃÀû continue »ç¿ë
+            continue; // ?? ?”ì²­?¬í•­ ë°˜ì˜: ëª…ì‹œ??continue ?¬ìš©
         }
     }
 }
 
-// ÅÍ¹Ì³Î¿¡ ¸Ê µ¥ÀÌÅÍ¸¦ ¿¹»Ú°Ô Âï¾îÁÖ´Â ÇÔ¼ö
+// ?°ë??ì— ë§??°ì´?°ë? ?ˆì˜ê²?ì°ì–´ì£¼ëŠ” ?¨ìˆ˜
 void printBoard() {
-    // »ó´Ü XÃà ÀÎµ¦½º °¡ÀÌµå
+    // ?ë‹¨ Xì¶??¸ë±??ê°€?´ë“œ
     printf("   ");
     for (int x = 0; x < MAP_WIDTH; x++) printf("%2d", x);
     printf("\n   ");
@@ -135,27 +135,27 @@ void printBoard() {
     printf("\n");
 
     for (int y = 0; y < MAP_HEIGHT; y++) {
-        printf("%2d|", y); // ÁÂÃø YÃà ÀÎµ¦½º °¡ÀÌµå
+        printf("%2d|", y); // ì¢Œì¸¡ Yì¶??¸ë±??ê°€?´ë“œ
         for (int x = 0; x < MAP_WIDTH; x++) {
             if (board[y][x].isExists) {
-                printf("%2d", board[y][x].color); // Å¸ÀÏÀÌ ÀÖÀ¸¸é »ö»ó ¼ıÀÚ Ãâ·Â
+                printf("%2d", board[y][x].color); // ?€?¼ì´ ?ˆìœ¼ë©??‰ìƒ ?«ì ì¶œë ¥
             }
             else {
-                printf(" ."); // ºó Ä­Àº Á¡(.)À¸·Î Ç¥½Ã
+                printf(" ."); // ë¹?ì¹¸ì? ??.)?¼ë¡œ ?œì‹œ
             }
         }
         printf("\n");
     }
 }
 
-// [¹Ì¼Ç 2] Å¬¸¯ À§Ä¡ ±âÁØ »óÇÏÁÂ¿ì ÃÖ´Ü°Å¸® Å¸ÀÏ ¸ÅÄª ¹× Á¡¼ö/Æä³ÎÆ¼ ¿¬»ê
+// [ë¯¸ì…˜ 2] ?´ë¦­ ?„ì¹˜ ê¸°ì? ?í•˜ì¢Œìš° ìµœë‹¨ê±°ë¦¬ ?€??ë§¤ì¹­ ë°??ìˆ˜/?˜ë„???°ì‚°
 void searchAndMatch(int startX, int startY) {
-    // ¿©±â¿¡ »ç¹æ Å½»ö ·ÎÁ÷ ÀÛ¼º ¿¹Á¤
+    // ?¬ê¸°???¬ë°© ?ìƒ‰ ë¡œì§ ?‘ì„± ?ˆì •
     struct Tile* leftTile = NULL;
     struct Tile* rightTile = NULL;
     struct Tile* upTile = NULL;
     struct Tile* downTile = NULL;
-    printf("\n(%d, %d) ÁÂÇ¥¸¦ ±âÁØÀ¸·Î 4¹æÇâ Å½»öÀ» ¼öÇàÇØ¾ß ÇÕ´Ï´Ù.\n", startX, startY);
+    printf("\n(%d, %d) ì¢Œí‘œë¥?ê¸°ì??¼ë¡œ 4ë°©í–¥ ?ìƒ‰???˜í–‰?´ì•¼ ?©ë‹ˆ??\n", startX, startY);
     for (int x = startX - 1; x >= 0; x--) {
         if (board[startY][x].isExists == true) {
             leftTile = &board[startY][x];
@@ -180,7 +180,7 @@ void searchAndMatch(int startX, int startY) {
             break;
         }
     }
-    int colorCount[COLORS_NUM] = { 0 }; // °¢ »ö»óº°·Î ¹ß°ßµÈ Å¸ÀÏ ¼ö¸¦ ¼¼´Â ¹è¿­
+    int colorCount[COLORS_NUM] = { 0 }; // ê°??‰ìƒë³„ë¡œ ë°œê²¬???€???˜ë? ?¸ëŠ” ë°°ì—´
     if (leftTile != NULL) {
         colorCount[(*leftTile).color] += 1;
     }
@@ -220,7 +220,7 @@ void searchAndMatch(int startX, int startY) {
     Sleep(1500);
 }
 
-// [¹Ì¼Ç 3] ±³Âø »óÅÂ ½Ã ÇöÀç È­¸é¿¡ ³²Àº Å¸ÀÏµéÀÇ À§Ä¡¸¦ ¹«ÀÛÀ§·Î ´Ù½Ã ¼¯±â
+// [ë¯¸ì…˜ 3] êµì°© ?íƒœ ???„ì¬ ?”ë©´???¨ì? ?€?¼ë“¤???„ì¹˜ë¥?ë¬´ì‘?„ë¡œ ?¤ì‹œ ?ê¸°
 void shuffleBoard() {
     int remainTile[TOTAL_TILES] = { 0 };
     int count = 0;
@@ -252,60 +252,7 @@ void shuffleBoard() {
     }
 }
 
-// [¹Ì¼Ç 4] ´õ ÀÌ»ó ¸ÂÃâ ¼ö ÀÖ´Â Å¸ÀÏ ½ÖÀÌ ¾ø´Â ±³Âø »óÅÂ(Deadlock) °Ë»ç
+// [ë¯¸ì…˜ 4] ???´ìƒ ë§ì¶œ ???ˆëŠ” ?€???ì´ ?†ëŠ” êµì°© ?íƒœ(Deadlock) ê²€??
 bool checkDeadlock() {
-    for (int startY = 0; startY < MAP_HEIGHT; startY++) {
-        for (int startX = 0; startX < MAP_WIDTH; startX++) {
-            if (board[startY][startX].isExists == false) {
-                struct Tile* leftTile = NULL;
-                struct Tile* rightTile = NULL;
-                struct Tile* upTile = NULL;
-                struct Tile* downTile = NULL;
-                for (int x = startX - 1; x >= 0; x--) {
-                    if (board[startY][x].isExists == true) {
-                        leftTile = &board[startY][x];
-                        break;
-                    }
-                }
-                for (int x = startX + 1; x < MAP_WIDTH; x++) {
-                    if (board[startY][x].isExists == true) {
-                        rightTile = &board[startY][x];
-                        break;
-                    }
-                }
-                for (int y = startY - 1; y >= 0; y--) {
-                    if (board[y][startX].isExists == true) {
-                        upTile = &board[y][startX];
-                        break;
-                    }
-                }
-                for (int y = startY + 1; y < MAP_HEIGHT; y++) {
-                    if (board[y][startX].isExists == true) {
-                        downTile = &board[y][startX];
-                        break;
-                    }
-                }
-                int colorCount[COLORS_NUM] = { 0 }; // °¢ »ö»óº°·Î ¹ß°ßµÈ Å¸ÀÏ ¼ö¸¦ ¼¼´Â ¹è¿­
-                if (leftTile != NULL) {
-                    colorCount[(*leftTile).color] += 1;
-                }
-                if (rightTile != NULL) {
-                    colorCount[(*rightTile).color] += 1;
-                }
-                if (upTile != NULL) {
-                    colorCount[(*upTile).color] += 1;
-                }
-                if (downTile != NULL) {
-                    colorCount[(*downTile).color] += 1;
-                }
-
-                for (int i = 0; i < COLORS_NUM; i++) {
-                    if (colorCount[i] >= 2) {
-                        return false;
-                    }
-                }
-            }
-        }
-    }
-    return true;
+    return false; // ?„ì§ ê²€??ê¸°ëŠ¥???†ìœ¼ë¯€ë¡???ƒ ê±°ì§“(false)?¼ë¡œ ?„ì‹œ ë°˜í™˜
 }
